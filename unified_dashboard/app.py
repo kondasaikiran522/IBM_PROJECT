@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
-from extensions import db
+from unified_dashboard.extensions import db
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
 # Import Shared Extensions
-from extensions import db, socketio
+from unified_dashboard.extensions import db, socketio
 db.init_app(app)
 socketio.init_app(app)
 
@@ -27,10 +27,10 @@ def add_header(response):
     return response
 
 # Import Blueprints
-from modules.ram_forensics.routes import ram_bp
-from modules.mobile_forensics.routes import mobile_bp
-from modules.nmap_scanner.routes import nmap_bp
-from modules.network_analyzer.routes import network_bp
+from unified_dashboard.modules.ram_forensics.routes import ram_bp
+from unified_dashboard.modules.mobile_forensics.routes import mobile_bp
+from unified_dashboard.modules.nmap_scanner.routes import nmap_bp
+from unified_dashboard.modules.network_analyzer.routes import network_bp
 
 # Register Blueprints
 app.register_blueprint(ram_bp)

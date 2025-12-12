@@ -16,7 +16,7 @@ def main():
     try:
         # Launch the Flask app
         # Using sys.executable to ensure the same python interpreter is used
-        process = subprocess.Popen([sys.executable, app_path], cwd=os.getcwd())
+        process = subprocess.Popen([sys.executable, "-m", "unified_dashboard.app"], cwd=os.getcwd())
         
         print(f"[+] Platform Running! Access at: http://localhost:5000 or http://<YOUR_IP>:5000")
         print(f"[!] Press Ctrl+C to stop.")
