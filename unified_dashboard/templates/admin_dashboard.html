@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Cyber Platform{% endblock %}
+
+{% block content %}
+<div class="text-center mb-2">
+    <h1><i class="fas fa-user-shield"></i> SYSTEM ADMINISTRATION</h1>
+    <p>User Management & Security Audits</p>
+</div>
+
+<!-- Users Overview -->
+<div class="card mb-2">
+    <h3><i class="fas fa-users"></i> Registered Users</h3>
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr style="background: rgba(0, 243, 255, 0.1); color: var(--primary-color);">
+                    <th style="padding: 10px; border: 1px solid #333;">ID</th>
+                    <th style="padding: 10px; border: 1px solid #333;">Username</th>
+                    <th style="padding: 10px; border: 1px solid #333;">Email</th>
+                    <th style="padding: 10px; border: 1px solid #333;">Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr style="border-bottom: 1px solid #333;">
+                    <td style="padding: 10px; border: 1px solid #333;">{{ u.id }}</td>
+                    <td style="padding: 10px; border: 1px solid #333;">{{ u.username }}</td>
+                    <td style="padding: 10px; border: 1px solid #333;">{{ u.email }}</td>
+                    <td style="padding: 10px; border: 1px solid #333;">
+                        {% if u.role == 'admin' %}
+                        <span style="color: #ff0055; font-weight: bold;">ADMIN</span>
+                        {% else %}
+                        <span style="color: #00f3ff;">USER</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Activity Logs -->
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3><i class="fas fa-history"></i> Activity Logs (Last 3 Months)</h3>
+        <a href="{{ url_for('download_logs') }}" class="btn btn-primary"
+            style="background: var(--success-color); border: none;">
+            <i class="fas fa-file-csv"></i> Download CSV
+        </a>
+    </div>
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr style="background: rgba(188, 19, 254, 0.1); color: var(--secondary-color);">
+                    <th style="padding: 10px; border: 1px solid #333;">Time (IST)</th>
+                    <th style="padding: 10px; border: 1px solid #333;">User</th>
+                    <th style="padding: 10px; border: 1px solid #333;">Action</th>
+                    <th style="padding: 10px; border: 1px solid #333;">Details</th>
+                    <th style="padding: 10px; border: 1px solid #333;">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr
+                    style="border-bottom: 1px solid #333; {% if log.action == 'LOGOUT' %}background: rgba(255, 68, 68, 0.1);{% endif %}">
+                    <td style="padding: 10px; border: 1px solid #333;">{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #333;">{{ log.user.username }}</td>
+                    <td style="padding: 10px; border: 1px solid #333;">
+                        {% if log.action == 'LOGIN' %}
+                        <span style="color: #00ff00;">LOGIN</span>
+                        {% elif log.action == 'LOGOUT' %}
+                        <span style="color: #ff0055; font-weight:bold;">LOGOUT</span>
+                        {% else %}
+                        <span style="color: #00f3ff;">{{ log.action }}</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #333;">{{ log.details }}</td>
+                    <td style="padding: 10px; border: 1px solid #333;">{{ log.duration }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

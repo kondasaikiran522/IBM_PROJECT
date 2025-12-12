@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NMAP // CYBER_DECK_V2</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap"
+    rel="stylesheet">
+  <!-- Libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+  <script src="https://unpkg.com/globe.gl"></script>
+
+  <link rel="stylesheet" href="{{ url_for('nmap.static', filename='style.css') }}">
+</head>
+
+<body>
+  <div class="overlay"></div> <!-- Scanline effect -->
+
+  <div class="container">
+    <header>
+      <div>
+        <h1><span class="glitch" data-text="NET_SCANNER">NET_SCANNER</span> <small>v2.0 [ONLINE]</small></h1>
+        <h3 style="border:none; margin:0; font-size:0.9em; color:var(--text-color);">Welcome {{ current_user.username }}
+        </h3>
+      </div>
+      <div id="connection-status">DISCONNECTED</div>
+    </header>
+
+    <div class="grid-layout">
+      <!-- Sidebar Controls -->
+      <aside class="control-panel glass-panel">
+        <h3>// CONTROL CENTER</h3>
+
+        <div class="input-group">
+          <label>Target IP or Network</label>
+          <input type="text" id="target" placeholder="e.g., 192.168.1.1 or 192.168.1.0/24">
+          <small style="color: #888; font-size: 0.8em;">Leave empty to auto-detect your local network.</small>
+        </div>
+
+        <div class="input-group">
+          <label>Scan Type</label>
+          <select id="scan-type">
+            <option value="network">Network Discovery (Find Devices)</option>
+            <option value="host">Quick Ping (Check Online)</option>
+            <option value="service">Service Details (Slow & Thorough)</option>
+            <option value="os">Detect Operating System</option>
+            <option value="stealth">Stealth Mode (Harder to Detect)</option>
+            <option value="ports">Port Scan (Find Open Doors)</option>
+            <option value="script">Vulnerability Script (Advanced)</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Additional Options (Optional)</label>
+          <input type="text" id="extra" placeholder="e.g. 1-100 (Port Range) or http-title">
+        </div>
+
+        <div class="actions">
+          <button onclick="startScan()" class="btn-primary">START SCAN</button>
+          <button onclick="toggleSentry()" id="btn-sentry" class="btn-warning">ENABLE MONITORING</button>
+          <button onclick="generateReport()" class="btn-secondary">DOWNLOAD REPORT</button>
+        </div>
+      </aside>
+
+      <!-- Main Vis Area -->
+      <main class="visualizer glass-panel">
+        <div class="vis-tabs">
+          <button id="tab-map" class="active" onclick="switchVis('map')">Network Map</button>
+          <button id="tab-globe" onclick="switchVis('globe')">Global Threat Map 3D</button>
+        </div>
+        <div id="mynetwork"></div>
+        <div id="globe-container" class="hidden" style="width:100%; height:100%"></div>
+      </main>
+
+      <!-- Matrix Console -->
+      <section class="console-log glass-panel">
+        <h3>// ACTIVITY LOG</h3>
+        <div id="output" class="terminal-output">
+          <div class="log-line">System ready. Enter a target above to begin.</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="details-modal" class="modal hidden">
+      <div class="modal-content glass-panel">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modal-title">HOST_DETAILS</h2>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('nmap.static', filename='script.js') }}"></script>
+</body>
+
+</html>

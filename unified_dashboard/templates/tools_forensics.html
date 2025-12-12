@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Forensics - Cyber Platform{% endblock %}
+
+{% block content %}
+<div class="text-center mb-2">
+    <h1><i class="fas fa-fingerprint"></i> Digital Forensics</h1>
+    <p>Tools for extracting and analyzing evidence from digital devices.</p>
+</div>
+
+<div class="card-grid">
+    <!-- Mobile -->
+    <div class="card">
+        <h3><i class="fas fa-mobile-alt"></i> Mobile Data Extractor</h3>
+        <p>Extract Call logs, SMS, Contacts, and App data from Android devices via ADB integration.</p>
+        <a href="{{ url_for('tool_mobile') }}" class="btn btn-secondary">OPEN MODULE</a>
+    </div>
+
+    <!-- RAM -->
+    <div class="card">
+        <h3><i class="fas fa-memory"></i> RAM Data Extractor</h3>
+        <p>Analyze volatile memory dumps to find hidden processes, connections, and artifacts.</p>
+        <a href="{{ url_for('tool_ram') }}" class="btn btn-secondary">OPEN MODULE</a>
+    </div>
+</div>
+{% endblock %}

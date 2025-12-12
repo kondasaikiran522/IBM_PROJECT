@@ -1,0 +1,441 @@
+:root {
+    --bg-color: #050505;
+    --panel-bg: rgba(20, 20, 30, 0.7);
+    --primary: #00f3ff;
+    /* Cyan */
+    --secondary: #bc13fe;
+    /* Neon Purple */
+    --success: #00f3ff;
+    /* Cyan for success to match theme */
+    --error: #ff0055;
+    /* Red */
+    --text-main: #e0e0e0;
+    --text-dim: #94a3b8;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-header: 'Orbitron', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* === BACKGROUND FX === */
+.overlay-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(var(--panel-bg) 1px, transparent 1px),
+        linear-gradient(90deg, var(--panel-bg) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 10;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 10s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanline {
+    0% {
+        bottom: 100%;
+    }
+
+    100% {
+        bottom: -100px;
+    }
+}
+
+/* === LAYOUT === */
+.app-container {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 280px;
+    background: rgba(10, 10, 15, 0.9);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.content-area {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* === SIDEBAR ELEMENTS === */
+.logo {
+    font-family: var(--font-header);
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    letter-spacing: 2px;
+}
+
+.version {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    vertical-align: super;
+}
+
+.nav-menu {
+    flex: 1;
+}
+
+.nav-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: rgba(0, 243, 255, 0.1);
+    border-left-color: var(--primary);
+    color: var(--text-main);
+    padding-left: 20px;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #333;
+    margin-right: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.nav-item.active .status-dot {
+    background: var(--primary);
+    box-shadow: 0 0 8px var(--primary);
+}
+
+.system-status {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    font-size: 0.8rem;
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.badge {
+    color: var(--text-dim);
+}
+
+.badge.ok {
+    color: var(--success);
+    text-shadow: 0 0 5px var(--success);
+}
+
+.badge.err {
+    color: var(--error);
+    text-shadow: 0 0 5px var(--error);
+}
+
+/* === MAIN CONTENT === */
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-header h1 {
+    font-family: var(--font-header);
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+.header-line {
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    margin-bottom: 30px;
+    width: 200px;
+}
+
+/* === COMPONENTS === */
+.glass {
+    background: var(--panel-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.card h3 {
+    color: var(--secondary);
+    margin-bottom: 10px;
+    font-family: var(--font-header);
+}
+
+.btn-action,
+.btn-primary {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 10px 20px;
+    font-family: var(--font-header);
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover,
+.btn-action:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 15px var(--primary);
+}
+
+.terminal-container {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    border: 1px solid #333;
+}
+
+.terminal-header {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    font-family: var(--font-header);
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.terminal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    font-family: 'Consolas', monospace;
+    white-space: pre-wrap;
+    color: #ccc;
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+.log-line {
+    margin-bottom: 2px;
+}
+
+.log-line.error {
+    color: var(--error);
+}
+
+.log-line.success {
+    color: var(--success);
+}
+
+.log-line.system {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+/* Control Panel */
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.action-row {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.vertical-divider {
+    width: 1px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.file-selector {
+    background: #000;
+    color: var(--text-main);
+    border: 1px solid #333;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    font-family: var(--font-mono);
+}
+
+.plugin-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    border-radius: 2px;
+}
+
+/* File Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+th {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.btn-download {
+    color: var(--success);
+    text-decoration: none;
+    border: 1px solid var(--success);
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
+/* === STATS & DASHBOARD === */
+.stats-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-box {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-box:last-child {
+    border-right: none;
+}
+
+.stat-box h3 {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.stat-number {
+    font-size: 3rem;
+    color: var(--primary);
+    font-family: var(--font-header);
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+.stat-text {
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin-top: 15px;
+}
+
+/* === SPLIT VIEW (ACQUISITION & ANALYSIS) === */
+.split-view {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.half-width {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.divider-horiz {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+    width: 100%;
+}

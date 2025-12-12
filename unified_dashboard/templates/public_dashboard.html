@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}Cyber Tools Platform - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="welcome-section text-center mb-2" style="padding: 40px 20px;">
+    <div style="margin-bottom: 15px;">
+        <i class="fas fa-shield-alt"
+            style="font-size: 4rem; color: var(--primary-color); text-shadow: 0 0 20px var(--primary-color);"></i>
+    </div>
+    <h1
+        style="font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Cyber Tools Integrated Platform
+    </h1>
+    <p style="font-size: 1.2rem; color: #999; margin-bottom: 25px;">
+        Advanced Security Auditing & Digital Forensics Suite
+    </p>
+
+    <div style="display: flex; gap: 15px; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <a href="{{ url_for('login') }}" class="btn btn-primary" style="padding: 12px 35px; font-size: 1.1rem;">
+            <i class="fas fa-sign-in-alt"></i> Login to Access Tools
+        </a>
+        <a href="{{ url_for('register') }}" class="btn btn-secondary" style="padding: 12px 35px; font-size: 1.1rem;">
+            <i class="fas fa-user-plus"></i> Create Account
+        </a>
+    </div>
+</div>
+
+<!-- About & Mission -->
+<div class="card-grid" style="margin-bottom: 20px;">
+    <div class="card" style="border-left: 3px solid var(--primary-color);">
+        <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+        <p style="line-height: 1.7;">
+            To provide security professionals and forensic investigators with a unified, powerful platform that
+            eliminates
+            tool fragmentation. We consolidate industry-standard security tools into one seamless, cyberpunk-themed
+            interface.
+        </p>
+    </div>
+
+    <div class="card" style="border-left: 3px solid var(--secondary-color);">
+        <h3><i class="fas fa-eye"></i> Our Vision</h3>
+        <p style="line-height: 1.7;">
+            Become the go-to integrated platform for cybersecurity professionals worldwide, featuring AI-driven
+            analysis,
+            automated reporting, and real-time threat correlation across multiple security vectors.
+        </p>
+    </div>
+</div>
+
+<!-- Integrated Tools -->
+<div class="card" style="margin-bottom: 20px;">
+    <h3 style="text-align: center; margin-bottom: 25px; font-size: 1.8rem;">
+        <i class="fas fa-toolbox"></i> Integrated Security Tools
+    </h3>
+    <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <!-- Nmap -->
+        <div
+            style="text-align: center; padding: 20px; background: rgba(0, 243, 255, 0.05); border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.2);">
+            <i class="fas fa-network-wired"
+                style="font-size: 3rem; color: var(--primary-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--primary-color); margin-bottom: 8px;">Nmap Scanner</h4>
+            <p style="font-size: 0.9rem; color: #999;">Network mapping, port scanning & vulnerability detection</p>
+        </div>
+
+        <!-- Wireshark -->
+        <div
+            style="text-align: center; padding: 20px; background: rgba(188, 19, 254, 0.05); border-radius: 8px; border: 1px solid rgba(188, 19, 254, 0.2);">
+            <i class="fas fa-chart-line"
+                style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--secondary-color); margin-bottom: 8px;">Wireshark</h4>
+            <p style="font-size: 0.9rem; color: #999;">Real-time packet capture & deep protocol analysis</p>
+        </div>
+
+        <!-- RAM Forensics -->
+        <div
+            style="text-align: center; padding: 20px; background: rgba(0, 255, 170, 0.05); border-radius: 8px; border: 1px solid rgba(0, 255, 170, 0.2);">
+            <i class="fas fa-memory" style="font-size: 3rem; color: var(--success-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--success-color); margin-bottom: 8px;">RAM Forensics</h4>
+            <p style="font-size: 0.9rem; color: #999;">Volatility-based memory dump analysis & artifact extraction</p>
+        </div>
+
+        <!-- Mobile Forensics -->
+        <div
+            style="text-align: center; padding: 20px; background: rgba(255, 0, 85, 0.05); border-radius: 8px; border: 1px solid rgba(255, 0, 85, 0.2);">
+            <i class="fas fa-mobile-alt" style="font-size: 3rem; color: var(--danger-color); margin-bottom: 10px;"></i>
+            <h4 style="color: var(--danger-color); margin-bottom: 8px;">Mobile Forensics</h4>
+            <p style="font-size: 0.9rem; color: #999;">Android device data extraction & comprehensive analysis</p>
+        </div>
+    </div>
+</div>
+
+<!-- Key Benefits -->
+<div class="card-grid" style="margin-bottom: 20px;">
+    <div class="card">
+        <h3><i class="fas fa-rocket"></i> Why Choose Our Platform?</h3>
+        <ul style="list-style: none; padding: 0; margin-top: 15px;">
+            <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+                <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success-color);"></i>
+                <strong>Unified Interface:</strong> Access all tools from one cyberpunk-themed dashboard
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+                <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success-color);"></i>
+                <strong>Activity Logging:</strong> Comprehensive audit trails with 90-day retention
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+                <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success-color);"></i>
+                <strong>Session Management:</strong> Secure authentication with auto-timeout protection
+            </li>
+            <li style="padding-left: 25px; position: relative;">
+                <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success-color);"></i>
+                <strong>Admin Controls:</strong> Centralized user management and monitoring dashboard
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-users"></i> Built For Professionals</h3>
+        <p style="line-height: 1.7; margin-bottom: 15px;">
+            Designed specifically for:
+        </p>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 10px;"><i class="fas fa-angle-right" style="color: var(--primary-color);"></i>
+                Security Analysts & Penetration Testers</li>
+            <li style="margin-bottom: 10px;"><i class="fas fa-angle-right" style="color: var(--primary-color);"></i>
+                Digital Forensics Investigators</li>
+            <li style="margin-bottom: 10px;"><i class="fas fa-angle-right" style="color: var(--primary-color);"></i>
+                Incident Response Teams</li>
+            <li><i class="fas fa-angle-right" style="color: var(--primary-color);"></i> Cybersecurity Researchers</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="card"
+    style="background: linear-gradient(135deg, rgba(0, 243, 255, 0.05), rgba(188, 19, 254, 0.05)); border: 1px solid rgba(0, 243, 255, 0.3);">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h3><i class="fas fa-headset"></i> Get In Touch</h3>
+        <p style="color: #999;">Questions? Feature requests? We're here to help.</p>
+    </div>
+
+    <div class="card-grid"
+        style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+        <div>
+            <i class="fas fa-envelope"
+                style="font-size: 2rem; color: var(--primary-color); margin-bottom: 10px; display: block;"></i>
+            <strong>Email</strong>
+            <p style="color: #999; margin: 5px 0;">support@cyberplatform.com</p>
+        </div>
+
+        <div>
+            <i class="fas fa-phone"
+                style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px; display: block;"></i>
+            <strong>Helpline</strong>
+            <p style="color: #999; margin: 5px 0;">+91 9XXXX XXXXX</p>
+        </div>
+
+        <div>
+            <i class="fab fa-github"
+                style="font-size: 2rem; color: var(--success-color); margin-bottom: 10px; display: block;"></i>
+            <strong>GitHub</strong>
+            <p style="color: #999; margin: 5px 0;">github.com/cyber-platform</p>
+        </div>
+
+        <div>
+            <i class="fas fa-map-marker-alt"
+                style="font-size: 2rem; color: var(--danger-color); margin-bottom: 10px; display: block;"></i>
+            <strong>Headquarters</strong>
+            <p style="color: #999; margin: 5px 0;">INDIA</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Footer -->
+<div class="text-center"
+    style="margin-top: 30px; padding: 30px; background: rgba(0, 243, 255, 0.03); border-radius: 10px; border: 1px solid rgba(0, 243, 255, 0.2);">
+    <h3 style="margin-bottom: 15px;">Ready to Get Started?</h3>
+    <p style="color: #999; margin-bottom: 20px;">Join security professionals worldwide using our integrated platform.
+    </p>
+    <a href="{{ url_for('login') }}" class="btn btn-primary" style="padding: 12px 40px; font-size: 1.1rem;">
+        <i class="fas fa-rocket"></i> Launch Platform
+    </a>
+</div>
+{% endblock %}

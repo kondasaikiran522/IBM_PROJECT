@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORTEX // MEMORY FORENSICS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('ram.static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="overlay-grid"></div>
+    <div class="scanline"></div>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="icon">▚</span> RAM DATA EXTRACTOR
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-item active" onclick="showSection('dashboard')">
+                    <span class="status-dot"></span> DASHBOARD
+                </div>
+                <div class="nav-item" onclick="showSection('capture')">
+                    <span class="status-dot"></span> ACQUISITION & ANALYSIS
+                </div>
+                <div class="nav-item" onclick="showSection('files')">
+                    <span class="status-dot"></span> HISTORY OF RECENT FILES
+                </div>
+            </nav>
+
+            <div class="system-status">
+                <div class="status-row">
+                    <span>WINPMEM</span> <span id="status-winpmem" class="badge">Checking...</span>
+                </div>
+                <div class="status-row">
+                    <span>VOLATILITY</span> <span id="status-vol" class="badge">Checking...</span>
+                </div>
+                <div class="status-row">
+                    <span>ADB</span> <span id="status-adb" class="badge">Checking...</span>
+                </div>
+                <div class="status-row">
+                    <span>ADMIN</span> <span id="status-admin" class="badge">Checking...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content-area">
+
+            <!-- SECTION: DASHBOARD -->
+            <section id="dashboard" class="content-section active">
+                <header class="section-header">
+                    <h1>CASE INTELLIGENCE</h1>
+                    <h3>Welcome {{ current_user.username }}</h3>
+                    <div class="header-line"></div>
+                </header>
+
+                <div class="stats-container glass">
+                    <div class="stat-box">
+                        <h3>TOTAL CASES</h3>
+                        <div id="stat-total-cases" class="stat-number">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <h3>LAST ACTIVITY</h3>
+                        <div id="stat-last-active" class="stat-text">--</div>
+                    </div>
+                </div>
+
+                <div class="table-container glass" style="margin-top: 20px;">
+                    <h3>RECENT CASE FILES</h3>
+                    <table id="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>CASE NAME</th>
+                                <th>DATE</th>
+                                <th>TIME</th>
+                                <th>TYPE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION: ACQUISITION & ANALYSIS -->
+            <section id="capture" class="content-section">
+                <header class="section-header">
+                    <h1>OPERATIONS CENTER</h1>
+                    <div class="header-line"></div>
+                </header>
+
+                <div class="split-view">
+                    <!-- LEFT: ACQUISITION -->
+                    <div class="control-panel glass half-width">
+                        <h2>1. ACQUISITION</h2>
+                        <p class="subtext">Capture physical memory from endpoint.</p>
+
+                        <div class="action-block">
+                            <h3>WINDOWS HOST</h3>
+                            <button id="btn-win-capture" class="btn-primary glitch-effect"
+                                onclick="startCapture('windows')">
+                                EXECUTE DUMP (WinPMEM)
+                            </button>
+                        </div>
+                        <div class="divider-horiz"></div>
+                        <div class="action-block">
+                            <h3>ANDROID DEVICE</h3>
+                            <button id="btn-android-capture" class="btn-primary" onclick="startCapture('android')">
+                                EXECUTE DUMP (ADB)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: ANALYSIS -->
+                    <div class="control-panel glass half-width">
+                        <h2>2. ANALYSIS (VOLATILITY)</h2>
+                        <p class="subtext">Process memory dump for artifacts.</p>
+
+                        <label>Select Target Image:</label>
+                        <select id="analysis-file-select" class="file-selector">
+                            <option value="">-- Scan for .raw files --</option>
+                        </select>
+
+                        <div class="plugin-list">
+                            <span>Plugins:</span>
+                            <span class="tag">pslist</span>
+                            <span class="tag">netscan</span>
+                            <span class="tag">malfind</span>
+                        </div>
+
+                        <button id="btn-analyze" class="btn-primary glitch-effect" onclick="startAnalysis()">
+                            START ANALYSIS
+                        </button>
+                    </div>
+                </div>
+
+                <div class="terminal-container glass" style="margin-top: 20px;">
+                    <div class="terminal-header">
+                        <span>>_ LIVE_OPERATION_LOG</span>
+                        <div class="terminal-controls">
+                            <button class="btn-danger" id="btn-stop" onclick="stopProcess()">TERMINATE PROCESS</button>
+                            <button onclick="clearTerminal()">CLEAR</button>
+                        </div>
+                    </div>
+                    <div id="live-terminal" class="terminal-body">
+                        <div class="log-line system">Ready for operations...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: HISTORY (FILES) -->
+            <section id="files" class="content-section">
+                <header class="section-header">
+                    <h1>HISTORY OF RECENT FILES</h1>
+                    <div class="header-line"></div>
+                </header>
+
+                <div class="table-container glass">
+                    <table id="file-table">
+                        <thead>
+                            <tr>
+                                <th>FILENAME</th>
+                                <th>TYPE</th>
+                                <th>SIZE</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('ram.static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

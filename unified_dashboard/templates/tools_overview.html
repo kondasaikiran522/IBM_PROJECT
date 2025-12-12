@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Tools - Cyber Platform{% endblock %}
+
+{% block content %}
+<div class="text-center mb-2">
+    <h2><i class="fas fa-toolbox"></i> Tool Modules</h2>
+    <p>Select a category to access specific utilities.</p>
+</div>
+
+<div class="card-grid">
+    <!-- Pentesting -->
+    <div class="card text-center">
+        <i class="fas fa-bug fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+        <h3>Penetration Testing</h3>
+        <p>Reconnaissance, network scanning, packet analysis, and vulnerability assessment utilities.</p>
+        <br>
+        <a href="{{ url_for('tools_category', category='pentesting') }}" class="btn">EXPLORE</a>
+    </div>
+
+    <!-- Forensics -->
+    <div class="card text-center">
+        <i class="fas fa-fingerprint fa-3x" style="color: var(--secondary-color); margin-bottom: 1rem;"></i>
+        <h3>Digital Forensics</h3>
+        <p>Data extraction and artifact analysis for Mobile Devices (Android) and Volatile Memory (RAM).</p>
+        <br>
+        <a href="{{ url_for('tools_category', category='forensics') }}" class="btn btn-secondary">EXPLORE</a>
+    </div>
+</div>
+{% endblock %}

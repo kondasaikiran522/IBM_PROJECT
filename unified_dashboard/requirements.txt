@@ -1,0 +1,12 @@
+flask
+flask-sqlalchemy
+flask-login
+werkzeug
+flask-socketio
+flask-cors
+scapy
+pandas
+openpyxl
+reportlab
+requests
+psutil

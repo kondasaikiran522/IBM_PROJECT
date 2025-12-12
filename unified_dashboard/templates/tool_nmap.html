@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Nmap Scanner - Cyber Platform{% endblock %}
+
+{% block content %}
+<div class="text-center mb-2">
+    <h1><i class="fas fa-network-wired"></i> Nmap Scanner</h1>
+    <p>Network Mapping & Port Scanning Utility</p>
+</div>
+
+<div class="card-grid">
+    <div class="card" style="flex: 2;">
+        <h3>Deep Description</h3>
+        <p>Nmap (Network Mapper) is a free and open-source network scanner created by Gordon Lyon. Nmap is used to
+            discover hosts and services on a computer network by sending packets and analyzing the responses.</p>
+        <br>
+        <h4>Feature Classes:</h4>
+        <ul>
+            <li>Host Discovery (Ping Scanning)</li>
+            <li>Port Scanning (SYN/Connect)</li>
+            <li>Version Detection</li>
+            <li>OS Detection</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Launch Tool</h3>
+        <p>Status: <span style="color: #00ff00;">READY</span></p>
+        <p>Status: <span style="color: #00ff00;">READY</span></p>
+        <p>Integrated Module</p>
+        <br>
+        <a href="/tools/nmap/" class="btn">GO TO TOOL <i class="fas fa-external-link-alt"></i></a>
+    </div>
+</div>
+
+<div class="card mt-2">
+    <h3><i class="fab fa-youtube"></i> Tutorial: How to use Nmap</h3>
+    <div style="text-align: center;">
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/n4sW-1eZ8wY" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    </div>
+</div>
+{% endblock %}

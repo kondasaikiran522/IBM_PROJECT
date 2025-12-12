@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ibm-flask-dashboard
+    env: python
+    region: oregon
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn unified_dashboard.app:app"
+    plan: free
+    branch: main
